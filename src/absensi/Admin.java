@@ -21,18 +21,18 @@ public class Admin extends javax.swing.JFrame {
      */
     public Admin() {
         initComponents();
-        TampilDatakaryawan();
+        TampilDatakaryawan();//memanggil method di tampildatakaryawan 
         jammasuk();
         jamkeluar();
     }
      private void TampilDatakaryawan() {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("NO");
+        model.addColumn("NO");//menampilkan judul pada kolom
         model.addColumn("ID KARYAWAN");
         model.addColumn("NAMA");
         model.addColumn("ALAMAT");
         model.addColumn("NO TELPON");
-           try {
+           try {//untuk mengisi isi kolom
            
             String sql = "select * from profile";
             Connection conn = koneksi.koneksiDB();
@@ -41,7 +41,7 @@ public class Admin extends javax.swing.JFrame {
             while(res.next()){
                 model.addRow(new Object[]{res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5)});
             }
-           karyawantb.setModel(model);
+           karyawantb.setModel(model);//karyawantb= nama variabel tabel
         } catch (Exception e) {
                System.out.println(e);
         }

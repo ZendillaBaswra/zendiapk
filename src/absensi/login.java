@@ -130,16 +130,8 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String idlogin =null , username= null;
         String sql = "SELECT * FROM user_log where id_login=? AND password=?";
-//        try {
-//            pst = con.prepareStatement(sql);
-//            pst.setString(1, userfield.getText());
-//            pst.setString(2,passwordf.getText());
-//            rs = pst.executeQuery();
-//              
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-        try {
+
+        try { //untuk membaca data benar atau tidak sesuai pada isi kolom
             pst = con.prepareStatement(sql);
             pst.setString(1, userfield.getText());
             pst.setString(2,passwordf.getText());
@@ -150,24 +142,24 @@ public class login extends javax.swing.JFrame {
             } catch (Exception e) {
                 System.out.println(e);
             }
-            while (rs.next()) {          
+            while (rs.next()) {      //memanggil method dari getter setter yg terhubung dengan kolom id login sama username   
                 idlogin = rs.getString("id_login");
                 username = rs.getString("username");
                            
             }
             
             rs.last();
-            if (rs.getRow() == 1) {
+            if (rs.getRow() == 1) { // mengunci antara id username dengan tobil profil
                 session.setId_login(idlogin);
                 session.setUsername(username);
                
                 JOptionPane.showMessageDialog(null, "Selamat datang"+userfield.getText());
-                 if (userfield.getText().equals("admin")) {
-                    Admin ad = new Admin();
+                 if (userfield.getText().equals("admin")) { //untuk membaca jika inputan adalah admin maka bisa mengakses form admin
+                    Admin ad = new Admin();           // equals string = membaca inputan pada userfild
                     ad.setVisible(true);
 //                    JOptionPane.showMessageDialog(this,"selamat datang "+userfield.getText());
                     dispose();
-                 }else {
+                 }else { // semisal inputan bukan ADMIN mka akan mengakses form1/formkaryawan
                 form1 f = new form1();
                 f.setVisible(true);
                 dispose();

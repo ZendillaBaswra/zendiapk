@@ -40,23 +40,22 @@ public class form1 extends javax.swing.JFrame {
         waktu();
         
         jamtx.disable();
-        tangltx.disable();
-        namafield.disable();
+        tangltx.disable(); //untuk mengunci field 
+        namafield.disable();//disable=dikunci
     }
-     public void absen(){
-        String jam = jTextField8.getText();
-        String tanggal=tangltx.getText();
-        String nama =namafield.getText();
-       java.util.Date today = new java.util.Date();
-       java.sql.Timestamp waktu = new java.sql.Timestamp(today.getTime());
-        try {
-            String query = "insert into absensi (user,jam_masuk) value(?,?)";
+     public void absen(){ 
+        
+        String nama =namafield.getText(); //untuk membaca inputan nama di awal login
+       java.util.Date today = new java.util.Date(); //akses tanggal secara langsung
+       java.sql.Timestamp waktu = new java.sql.Timestamp(today.getTime());// antara jam sama tanggal menjadi satu kolom= timestamp
+        try { //
+            String query = "insert into absensi (user,jam_masuk) value(?,?)";//memberikan inputan ke jam masuk
              pst = con.prepareStatement(query);
-            pst.setString(1,nama);
-            pst.setTimestamp(2,waktu );
+            pst.setString(1,nama);//menginputkan ke kolom user di dabes dengan inputan yang diambil dari nama field/yang dikunci/yg diloginkan
+            pst.setTimestamp(2,waktu );//menginputkan ke kolom jam masuk dengan inputan yang diambil dari library timestamp
 //            pst.setDate(3, (Date) today);
-            pst.execute();
-        } catch (Exception e) {
+            pst.execute();// untuk mengaksikan semua priper statement/pst
+        } catch (Exception e) { //pesan eror
             System.out.println(e);
         }
     }
@@ -67,7 +66,7 @@ public class form1 extends javax.swing.JFrame {
        java.util.Date today = new java.util.Date();
        java.sql.Timestamp waktu = new java.sql.Timestamp(today.getTime());
         try {
-            String query = "insert into absensi (user,jam_keluar) value(?,?)";
+            String query = "insert into absensi (user,jam_keluar) value(?,?)";// memberikan inputan ke jam keluar
              pst = con.prepareStatement(query);
             pst.setString(1,nama);
             pst.setTimestamp(2,waktu );
@@ -97,22 +96,22 @@ public class form1 extends javax.swing.JFrame {
         clock.start();
     }
     public void tampildata(){
-        String sql ="SELECT * FROM profile WHERE id_log=?";
+        String sql ="SELECT * FROM profile WHERE id_log=?";// select selalu pakai execute query krn tidak ada perubahan data 
         try {
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, id_login);
-            ResultSet rs=pst.executeQuery();
-            while(rs.next()){
+            ResultSet rs=pst.executeQuery();//tidak ada perubahan data
+            while(rs.next()){ //mengunci sesion pada baris tabel 
                 idtxt.setText(id_login);
                 userntxt.setText(username);
-                namafield.setText(rs.getString("nama"));
+                namafield.setText(rs.getString("nama"));//nampilin data dari dabes dengan kolom nama yang dieksekusi pada nama field 
 //                txtnama.setText(rs.getString("nama"));
-                txtalamat.setText(rs.getString("alamat"));
+                txtalamat.setText(rs.getString("alamat"));//nampilin data dari dabes dengan kolom alamat yang dieksekusi pada txtalamat(Jlabel)
                 txttelpon.setText(rs.getString("no_telphon"));
             }
         } catch (Exception e) {
         }
-        absen();
+        absen();// memanggil kodingan pada/ di method void=absen 
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -244,13 +243,13 @@ public class form1 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jamtx)
-                            .addComponent(tangltx, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tangltx, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(idtxt)
@@ -282,10 +281,10 @@ public class form1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        login lg = new login();
-        lg.setVisible(true);
-        dispose();
-        absenkeluar();
+        login lg = new login();//manggil kelas login 
+        lg.setVisible(true);//menampilkan kelas login
+        dispose();// menutup kelas form 1
+        absenkeluar();//memanggil kodingan pada absenkeluar / otomatis mengisi kolom jam keluar
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tangltxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tangltxActionPerformed

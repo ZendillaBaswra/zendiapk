@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package absensi;
-
+//mengunci sesi login dari setiap username dan profilnya, jadi ini ngikutin username dan profilnya
 /**
  *
  * @author YOGA SAPUTRA
